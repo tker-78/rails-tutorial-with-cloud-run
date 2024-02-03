@@ -11,3 +11,23 @@ body {
     text-align: center;
   }
 }
+
+
+
+.signup-button {
+  text-align: center;
+  margin: 0 auto;
+  width: 50%;
+}
+
+/* forms */
+input, textarea, select {
+  border: 1px solid #bbb;
+  border-radius: 3px;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+textarea {
+  height: 3rem;
+}

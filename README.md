@@ -1,6 +1,22 @@
 # README
 
-* Deployment instructions
+## Docker Composeによる開発環境構築
+
+```bash
+$ docker compose build
+```
+
+```
+$ docker compose run web bin/rails db:create
+$ docker compose run web bin/rails db:migrate
+```
+
+```bash
+$ docker compose up
+```
+
+
+## Deployment instructions
 How to deploy this application to Google Cloud Platform(Google Cloud Run)
 
 APIの有効化
@@ -110,6 +126,17 @@ gem 'google-cloud-storage', '~>1.44'
 イメージのビルド
 ```bash
 $ gcloud builds submit --config cloudbuild.yaml
+```
+
+**.envが有効にならない場合**
+`database.yaml`に直接databaseの設定値を記述する。
+```
+production:
+  <<: *default
+  database: rails-tutorial
+  username: postgres
+  password: <%= Rails.application.credentials.gcp[:db_password] %>
+  host: /cloudsql/cloudrun-rails:asia-northeast1:rails-instance/
 ```
 
 デプロイ
