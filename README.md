@@ -12,9 +12,33 @@ $ docker compose run web bin/rails db:migrate
 ```
 
 ```bash
+$ docker compose run web bundle install
 $ docker compose up
 ```
 
+## テスティングフレームワークの設定
+RSpecを使用する。
+Dockerを用いる場合、Dockerfileでgemのインストールを下記のように記述して、
+開発環境のgemのインストールを指示する。
+
+```
+RUN gem install bundler && \
+    bundle config set --local deployment 'true' && \
+    # bundle config set --local without 'development test' && \
+    bundle install
+```
+
+### RSpecの実行環境の設定
+
+Dockerfileで実行環境をdevelopmentに指定しているため、
+rspecの実行環境もdevelopmentに固定されている。  
+そのため、下記の変更が必要。
+
+spec/rails_helper.rb
+```ruby
+# ENV['RAILS_ENV'] ||= 'test'
+ENV['RAILS_ENV'] = 'test'
+```
 
 ## Deployment instructions
 How to deploy this application to Google Cloud Platform(Google Cloud Run)

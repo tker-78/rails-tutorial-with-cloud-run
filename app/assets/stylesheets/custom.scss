@@ -1,8 +1,5 @@
 @import "bootstrap";
 
-body {
-}
-
 .table {
   text-align: center;
   thead th {
@@ -21,11 +18,18 @@ body {
 /* forms */
 input, textarea, select {
   border: 1px solid #bbb;
-  border-radius: 3px;
+  border-radius: 5px;
   width: 100%;
   margin-bottom: 15px;
 }
 
 textarea {
   height: 3rem;
+}
+
+#error_explanation {
+  color: red;
+  ul {
+    color: red;
+  }
 }

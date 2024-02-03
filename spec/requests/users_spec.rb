@@ -1,32 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe "Users", type: :request do
-  describe "GET /index" do
-    it "returns http success" do
-      get "/users/index"
-      expect(response).to have_http_status(:success)
+  describe "GET /users" do
+    it "ユーザー登録ページにアクセスできること" do
+      get new_user_path
+      expect(response).to have_http_status(200)
     end
   end
 
-  describe "GET /show" do
-    it "returns http success" do
-      get "/users/show"
-      expect(response).to have_http_status(:success)
+  describe "POST /users" do
+    let(:user) { FactoryBot.build(:user)}
+    it "ユーザーの新規作成の成功時には、リダイレクトされること" do
+      get new_user_path
+      post users_path, params: { user: { name: user.name, email: user.email, password: "password", password_confirmation: "password"} } 
+      expect(response).to have_http_status(302)
     end
   end
-
-  describe "GET /new" do
-    it "returns http success" do
-      get "/users/new"
-      expect(response).to have_http_status(:success)
-    end
-  end
-
-  describe "GET /edit" do
-    it "returns http success" do
-      get "/users/edit"
-      expect(response).to have_http_status(:success)
-    end
-  end
-
 end
