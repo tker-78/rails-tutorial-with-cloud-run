@@ -16,6 +16,14 @@ $ docker compose run web bundle install
 $ docker compose up
 ```
 
+### タイムゾーンの設定
+
+config/application.rb
+```ruby
+config.time_zone = "Tokyo"
+config.active_record.default_timezone = :local
+```
+
 ## テスティングフレームワークの設定
 RSpecを使用する。
 Dockerを用いる場合、Dockerfileでgemのインストールを下記のように記述して、

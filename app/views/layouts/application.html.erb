@@ -13,6 +13,13 @@
   <body>
     <%= render "partials/navbar" %>
     <div class="container">
+      <% flash.each do |message_type, message | %>
+        <div class="alert alert-<%= message_type %>">
+        <%= message %>
+        </div>
+      <% end %>
+    </div> 
+    <div class="container">
       <%= yield %>
     </div>
   </body>
