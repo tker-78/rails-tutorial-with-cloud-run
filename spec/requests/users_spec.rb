@@ -15,5 +15,11 @@ RSpec.describe "Users", type: :request do
       post users_path, params: { user: { name: user.name, email: user.email, password: "password", password_confirmation: "password"} } 
       expect(response).to have_http_status(302)
     end
+
+    it "無効なユーザー情報の場合、エラーメッセージが表示されること" do
+      get new_user_path
+      post users_path, params: {user: { name: "", email: "", password: "", password_confirmation: "" }}
+      expect(response.body).to include("Email is invalid", "Name can&#39;t be blank", "Password can&#39;t be blank", "Name can&#39;t be blank")
+    end
   end
 end
