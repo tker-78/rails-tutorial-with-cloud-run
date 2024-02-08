@@ -22,4 +22,14 @@ RSpec.describe User, type: :model do
     expect(user2.valid?).to be_falsey
   end
 
+  it "digestを生成できること" do
+    digest = User.digest(user.email)
+    expect(digest.size).to  eq 60
+  end
+
+  it "remember_tokenを生成できること" do
+    token = User.new_token
+    expect(token.size).to  eq 22
+  end
+
 end
