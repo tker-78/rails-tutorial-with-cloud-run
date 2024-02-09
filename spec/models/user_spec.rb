@@ -32,4 +32,17 @@ RSpec.describe User, type: :model do
     expect(token.size).to  eq 22
   end
 
+  describe "#remember,  #authenticated?" do
+    it "remember_digestがデータベースに保存されていること" do
+      user.remember
+      expect(user.remember_digest).not_to be_nil
+    end
+
+
+    it "認証済みであればtrueを返すこと" do
+      user.remember
+      expect(user.authenticated?(user.remember_token)).to be_truthy
+    end
+  end
+
 end
