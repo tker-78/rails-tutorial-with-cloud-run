@@ -2,9 +2,44 @@ require 'rails_helper'
 
 RSpec.describe "Users", type: :request do
   describe "GET /users" do
-    it "ユーザー登録ページにアクセスできること" do
-      get new_user_path
-      expect(response).to have_http_status(200)
+    it "インデックスページが表示されること" do
+      get users_path
+      expect(response).to have_http_status(:success)
+    end
+  end
+
+  describe "GET /users/:id/edit" do
+    let(:user) { FactoryBot.create(:user) }
+    let(:other_user) { FactoryBot.create(:other_user) }
+    context "ログインしている場合" do
+      before do
+        login user
+      end
+      it "編集ページが表示されること" do
+        get edit_user_path(user)
+        expect(response).to render_template(:edit)
+      end
+    end
+
+    context "ログインしていない場合" do
+      it "ログインページにリダイレクトされること" do
+        get edit_user_path(user)
+        expect(response).to redirect_to(login_path)
+      end
+      it "フラッシュメッセージが表示されること" do
+        get edit_user_path(user)
+        expect(flash[:danger]).to eq("ログインしてください")
+      end
+    end
+
+    context "間違ったユーザーでログインしている場合" do
+      before do
+        login other_user
+      end
+      it "フラッシュメッセージが表示されること" do
+        get edit_user_path(user)
+        expect(flash[:danger]).to eq("権限がありません")
+      end
     end
   end
 

@@ -6,6 +6,8 @@ class SessionsController < ApplicationController
     # userはviewからの呼び出しが不要なので、インスタンス変数にする必要なし
     user = User.find_by(email: params[:session][:email])
     if user && user.authenticate(params[:session][:password])
+      # 直前にアクセスしようとしたurlがあれば取り出す
+      forwarding_url = session[:forwarding_url]
 
       # reset the session
       reset_session
@@ -21,7 +23,7 @@ class SessionsController < ApplicationController
       # flash メッセージ
       flash[:success] = "ログインしました"
       # redirect to user_path
-      redirect_to user
+      redirect_to forwarding_url  || user
     else
       # flash メッセージ
       flash.now[:danger] = "無効なユーザーIDまたはパスワードです。"

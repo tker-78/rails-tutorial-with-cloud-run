@@ -1,6 +1,12 @@
 <h1>Users#index</h1>
 <p>Find me in app/views/users/index.html.erb</p>
 
+<div class="digg_pagination">
+  <div class="page_info">
+    <%= page_entries_info @users %>
+  </div>
+  <%= will_paginate @users %>
+</div>
 
 <table class="table" >
   <thead>
@@ -14,7 +20,7 @@
     <% @users.each do |user| %>
       <tr>
         <td><%= user.id %></td>
-        <td><%= user.name %></td>
+        <td><%= link_to user.name, user_path(user), class: "link hover"%></td>
         <td><%= user.email %></td>
         <td><%= user.created_at.strftime("%F %X") %></td>
         <td><%= user.updated_at.strftime("%F %X") %></td>
@@ -23,3 +29,8 @@
   </tbody>
 
 </table>
+
+
+<div class="digg_pagination">
+  <%= will_paginate @users %>
+</div>
