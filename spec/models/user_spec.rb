@@ -32,6 +32,10 @@ RSpec.describe User, type: :model do
     expect(token.size).to  eq 22
   end
 
+  it "adminかどうかを判定できること" do
+    expect(user.admin?).to be_truthy
+  end
+
   describe "#remember,  #authenticated?" do
     it "remember_digestがデータベースに保存されていること" do
       user.remember

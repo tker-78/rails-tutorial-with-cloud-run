@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :logged_in_user, only: [:index, :edit, :update]
   before_action :correct_user, only: [:edit, :update]
+  before_action :admin_user, only: :destroy
   def index
     @users = User.paginate(page: params[:page], per_page: 3)
   end
@@ -40,6 +41,15 @@ class UsersController < ApplicationController
     end
 
   end
+
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    flash[:success] = "User deleted!"
+    redirect_to users_path
+  end
+
+
   private
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
@@ -59,6 +69,13 @@ class UsersController < ApplicationController
     if @user != current_user
       flash[:danger] = "権限がありません"
       redirect_to edit_user_path(current_user) 
+    end
+  end
+
+  def admin_user
+    if !current_user.admin?
+      flash[:danger] = "権限がありません"
+      redirect_to(users_path, status: :see_other)
     end
   end
 end

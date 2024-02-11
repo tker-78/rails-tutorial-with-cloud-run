@@ -4,7 +4,7 @@ RSpec.describe "Users", type: :request do
   describe "GET /users" do
     it "インデックスページが表示されること" do
       get users_path
-      expect(response).to have_http_status(:success)
+      expect(response).to redirect_to login_path
     end
   end
 
@@ -72,6 +72,37 @@ RSpec.describe "Users", type: :request do
         expect(response.body).to include("Email is invalid", "Name can&#39;t be blank", "Password can&#39;t be blank", "Name can&#39;t be blank")
       end
     end
+  end
 
+  describe "DELETE /users/:id" do
+
+    context "管理者権限でログインしている場合" do
+      before do
+        @admin = FactoryBot.create(:admin)
+        @other_user = FactoryBot.create(:other_user)
+      end     
+
+      it "他のユーザーを削除できること" do
+        login @admin
+        delete user_path(@other_user)
+        expect(response).to redirect_to(users_path)
+        expect(User.exists?(@other_user.id)).to be_falsey
+      end
+    end
+
+    context "管理者権限でログインしていない場合" do
+      before do
+        @user = FactoryBot.create(:user)
+        @other_user = FactoryBot.create(:other_user)
+      end 
+
+      it "ユーザーの削除ができないこと" do
+        login @user
+        delete user_path(@other_user)
+        expect(response).to redirect_to(users_path)
+        expect(flash[:danger]).to eq("権限がありません")
+        expect(User.exists?(@other_user.id)).to be true
+      end
+    end
   end
 end
