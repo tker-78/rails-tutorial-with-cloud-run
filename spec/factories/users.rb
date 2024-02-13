@@ -22,4 +22,13 @@ FactoryBot.define do
     password_confirmation { "password" }
     admin { true}
   end
+
+  factory :active_user, class: User do
+    name {"active user"}
+    email {"active_user@gmail.com"}
+    password {"password"}
+    password_confirmation {"password"}
+    admin { false}
+    activated { true }
+  end
 end

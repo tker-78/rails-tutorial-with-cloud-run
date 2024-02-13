@@ -2,6 +2,10 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   let(:user) {FactoryBot.create(:user)}
+  let(:admin) {FactoryBot.create(:admin)}
+  let(:active_user) {FactoryBot.create(:active_user)}
+
+
   it "nameが存在すること" do
     user.name = ""
     expect(user.valid?).to be_falsey
@@ -32,8 +36,22 @@ RSpec.describe User, type: :model do
     expect(token.size).to  eq 22
   end
 
-  it "adminかどうかを判定できること" do
-    expect(user.admin?).to be_truthy
+  context "管理者ユーザーの場合" do
+    it "adminかどうかを判定できること" do
+      expect(admin.admin?).to be_truthy
+    end
+  end
+
+  context "有効化済みユーザーの場合" do
+    it "activeかどうかを判定できること" do
+      expect(active_user.activated?).to be_truthy
+    end
+  end
+
+  context "有効化済みでないユーザーの場合" do
+    it "activeがどうかを判定できること" do
+      expect(user.activated?).to be_falsey
+    end
   end
 
   describe "#remember,  #authenticated?" do
@@ -48,5 +66,6 @@ RSpec.describe User, type: :model do
       expect(user.authenticated?(user.remember_token)).to be_truthy
     end
   end
+
 
 end

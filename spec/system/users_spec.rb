@@ -15,7 +15,7 @@ RSpec.describe "Users", type: :system do
     fill_in "Password", with: user.password
     fill_in "Password confirmation", with: user.password
     click_button "Create my account"
-    expect(page).to have_content("User created!")
+    expect(page).to have_content("Please check your email for the activation link.")
   end
 
   scenario "user edit with friendly forwarding" do

@@ -43,6 +43,7 @@ RSpec.describe "Users", type: :request do
     end
   end
 
+  # create new user
   describe "POST /users" do
     let(:user) { FactoryBot.build(:user)}
     context "有効なユーザー情報の場合" do
@@ -54,14 +55,14 @@ RSpec.describe "Users", type: :request do
       it "ユーザー作成時にフラッシュメッセージが表示されること" do
         get new_user_path
         post users_path, params: { user: { name: user.name, email: user.email, password: "password", password_confirmation: "password"} }
-        expect(flash[:success]).to eq("User created!")
+        expect(flash[:info]).to eq("Please check your email for the activation link.")
       end
 
-      it "ユーザー登録時にユーザー情報ページにリダイレクトされること" do
+      it "ユーザー登録時にhomeにリダイレクトされること" do
         get new_user_path
         post users_path, params: { user: { name: user.name, email: user.email, password: "password", password_confirmation: "password"} }
         @user = User.find_by(email: user.email)
-        expect(response).to redirect_to(@user)
+        expect(response).to redirect_to(home_path)
       end
     end
     

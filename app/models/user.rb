@@ -3,7 +3,8 @@ class User < ApplicationRecord
   has_secure_password
   validates :name, presence: true
   validates :email, presence: true, format: { with: VALID_EMAIL_REGEX }, uniqueness: true
-  attr_accessor :remember_token # not saved in database
+  attr_accessor :remember_token, :activation_token # not saved in database
+  before_create :create_activation_digest
 
   def self.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost # default cost is 12
@@ -26,5 +27,15 @@ class User < ApplicationRecord
 
   def forget
     update_attribute(:remember_digest, nil)
+  end
+
+  # user activation
+  
+
+  private
+  def create_activation_digest
+    # todo
+    self.activation_token = User.new_token
+    self.activation_digest = User.digest(activation_token)
   end
 end
