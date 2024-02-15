@@ -45,6 +45,7 @@ class User < ApplicationRecord
 
 
 
+
   private
   def create_activation_digest
     self.activation_token = User.new_token
