@@ -66,6 +66,30 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
 
+  ###
+  # setting for mailer
+  # see https://guides.rubyonrails.org/action_mailer_basics.html#action-mailer-configuration-for-gmail
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {
+  #   address: "smtp.gmail.com",
+  #   port: 587,
+  #   domain: "",
+  #   user_name: "knotsh8778@gmail.com",
+  #   password: "",
+  #   authentication: "plain",
+  #   enable_starttls_auto: true,
+  #   open_timeout: 5,
+  #   read_timeout: 5
+  # }
+
+  ###
+
+
+
+
+
+
+
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false

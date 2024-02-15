@@ -30,11 +30,23 @@ class User < ApplicationRecord
   end
 
   # user activation
-  
+  def activate
+    update_attribute(:activated, true)
+    update_attribute(:activated_at, Time.zone.now)
+  end
+
+  # 渡されたトークンがダイジェストと一致したらtrueを返す
+  def authenticated?(attribute, token)
+    digest = send("#{attribute}_digest")
+    return false if digest.nil?
+    BCrypt::Password.new(digest).is_password?(token)
+  end
+
+
+
 
   private
   def create_activation_digest
-    # todo
     self.activation_token = User.new_token
     self.activation_digest = User.digest(activation_token)
   end

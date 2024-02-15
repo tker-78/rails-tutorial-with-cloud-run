@@ -3,7 +3,12 @@ class UserMailerPreview < ActionMailer::Preview
 
   # Preview this email at http://localhost:8080/rails/mailers/user_mailer/account_activation
   def account_activation
-    user = User.first
+    user = User.new
+    user.name = "nanana"
+    user.email = "nanana@gmail.com"
+    user.password = "password"
+    user.password_confirmation = "password"
+
     user.activation_token = User.new_token
     UserMailer.account_activation(user).deliver_now
   end
