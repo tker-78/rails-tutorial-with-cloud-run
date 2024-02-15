@@ -63,9 +63,27 @@ RSpec.describe User, type: :model do
 
     it "認証済みであればtrueを返すこと" do
       user.remember
-      expect(user.authenticated?(user.remember_token)).to be_truthy
+      expect(user.authenticated?(:remember, user.remember_token)).to be_truthy
     end
   end
+
+  context "新規ユーザーが作成された時" do
+    it "activation emailが送信されること" do
+      # todo
+      pending "todo: add expectation"
+      expect(true).to be false
+    end
+  
+    context "activation emailのリンクをクリックしたとき" do
+      it "ユーザーが有効化されること" do
+        # todo
+        pending "todo: add expectation"
+        expect(true).to be false
+      end
+    end
+  end
+
+  
 
 
 end
