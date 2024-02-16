@@ -1,0 +1,8 @@
+<div class="container col-md-6">
+  <h1>パスワードをリセット</h1>
+  <%= form_with(url: password_resets_url, scope: :password_resets) do |f| %>
+    <%= f.label :email %>
+    <%= f.email_field :email, class: ""%>
+    <%= f.submit "パスワード再設定用メールを送信", class: "btn btn-outline-primary" %>
+  <% end %>
+</div>

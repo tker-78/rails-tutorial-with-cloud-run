@@ -48,6 +48,22 @@ spec/rails_helper.rb
 ENV['RAILS_ENV'] = 'test'
 ```
 
+## bootstrapの導入
+Gemfile
+```ruby
+gem "bootstrap", "~> 5.1"
+gem "jquery-rails"
+```
+
+config/importmap.rb
+```ruby
+pin "bootstrap", to: "bootstrap.min.js", preload: true
+pin "@popperjs/core", to: "popper.js", preload: true
+```
+以上で導入完了。
+cssの記述は、`app/assets/stylesheets/custom.scss`に記述する。
+
+
 ## Deployment instructions
 How to deploy this application to Google Cloud Platform(Google Cloud Run)
 
